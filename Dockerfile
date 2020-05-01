@@ -26,7 +26,7 @@ COPY --from=gobuild /etc/ssl/certs /etc/ssl/certs
 COPY --from=gobuild /goapp/main /app/go-graphql-srv
 
 RUN chmod +rx -R /app && \
-    adduser -S laisky
+    adduser -q laisky
 USER laisky
 
 ENTRYPOINT [ "./go-graphql-srv" ]
