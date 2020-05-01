@@ -1,8 +1,8 @@
-FROM golang:1.13.4-alpine3.10 AS gobuild
+FROM golang:1.14.2-buster AS gobuild
 
 # run dependencies
-RUN apk update && apk upgrade && \
-    apk add --no-cache gcc git build-base ca-certificates curl && \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends g++ make gcc git build-essential ca-certificates && \
     update-ca-certificates
 
 ENV GO111MODULE=on
@@ -18,7 +18,7 @@ RUN go build -a --ldflags '-extldflags "-static"' entrypoints/main.go
 
 
 # copy executable file and certs to a pure container
-FROM alpine:3.10
+FROM debian:buster
 
 WORKDIR /app
 
