@@ -5,8 +5,9 @@ import (
 	"net/http"
 
 	ginMw "github.com/Laisky/gin-middlewares/v5"
-	"github.com/Laisky/laisky-blog-graphql/library/jwt"
 	"github.com/gin-gonic/gin"
+
+	"github.com/Laisky/laisky-blog-graphql/library/jwt"
 )
 
 // Instance global auth instance
@@ -31,7 +32,7 @@ func AuthMw(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Set(string(CtxKeyAuthUser), user)
+	ctx.Set(CtxKeyAuthUser, user)
 	ctx.Next()
 }
 

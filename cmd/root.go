@@ -48,7 +48,7 @@ func setupModules(ctx context.Context) {
 	general.Initialize(ctx)
 }
 
-func setupLibrary(ctx context.Context) {
+func setupLibrary(_ context.Context) {
 	if err := auth.Initialize([]byte(gconfig.Shared.GetString("settings.secret"))); err != nil {
 		log.Logger.Panic("init jwt", zap.Error(err))
 	}
@@ -58,7 +58,7 @@ func setupLibrary(ctx context.Context) {
 	}
 }
 
-func setupSettings(ctx context.Context) {
+func setupSettings(_ context.Context) {
 	// mode
 	if gconfig.Shared.GetBool("debug") {
 		fmt.Println("run in debug mode")
@@ -75,19 +75,19 @@ func setupSettings(ctx context.Context) {
 	config.LoadFromFile(cfgPath)
 }
 
-func setupLogger(_ context.Context) {
+func setupLogger(ctx context.Context) {
 	// log
-	// alertPusher, err := gutils.NewAlertPusherWithAlertType(
+	// alertPusher, err := glog.NewAlert(
 	// 	ctx,
 	// 	gconfig.Shared.GetString("settings.logger.push_api"),
-	// 	gconfig.Shared.GetString("settings.logger.alert_type"),
-	// 	gconfig.Shared.GetString("settings.logger.push_token"),
+	// 	glog.WithAlertType(gconfig.Shared.GetString("settings.logger.alert_type")),
+	// 	glog.WithAlertToken(gconfig.Shared.GetString("settings.logger.push_token")),
 	// )
 	// if err != nil {
 	// 	log.Logger.Panic("create AlertPusher", zap.Error(err))
 	// }
-	//
-	// library.Logger = log.Logger.WithOptions(
+
+	// log.Logger = log.Logger.WithOptions(
 	// 	zap.HooksWithFields(alertPusher.GetZapHook()),
 	// ).Named("laisky-graphql")
 
